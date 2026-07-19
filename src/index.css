@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base Styles */
+body {
+  background-color: #F7F9FC;
+  color: #2D3142;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom CSS-based Dark Mode mapping to ensure 100% gorgeous, robust coverage */
+html.dark, .dark body {
+  background-color: #0A0B0E !important;
+  color: #F1F5F9 !important;
+}
+
+.dark {
+  background-color: #0A0B0E;
+  color: #F1F5F9;
+
+  /* Override Tailwind CSS variables for an instant, seamless dark mode */
+  --color-white: #13151E;
+  --color-slate-50: #0A0B0F;
+  --color-slate-100: #161923;
+  --color-slate-200: #252A3B;
+  --color-slate-300: #38405B;
+  --color-slate-400: #556187;
+  --color-slate-500: #818EB9;
+  --color-slate-600: #A0ADD2;
+  --color-slate-700: #BEC6E4;
+  --color-slate-800: #ECEEFA;
+  --color-slate-900: #F6F7FE;
+
+  --color-gray-50: #0B0C10;
+  --color-gray-100: #151821;
+  --color-gray-200: #222635;
+  --color-gray-300: #343A50;
+  --color-gray-400: #4E5676;
+  --color-gray-500: #7A82A5;
+  --color-gray-600: #9BA2C2;
+  --color-gray-700: #BDC3DC;
+  --color-gray-800: #E6E8F3;
+  --color-gray-900: #F5F6FA;
+
+  /* Custom overrides for specific container components to look perfect */
+  input, select, textarea {
+    background-color: #151821 !important;
+    color: #F5F6FA !important;
+    border-color: #222635 !important;
+  }
+  
+  /* Dropdowns */
+  select option {
+    background-color: #13151D !important;
+    color: #F5F6FA !important;
+  }
+
+  /* Support the hardcoded hex classes */
+  .bg-\[\#F7F9FC\] {
+    background-color: #0A0B0E !important;
+  }
+  .text-\[\#2D3142\] {
+    color: #E6E8F3 !important;
+  }
+  
+  /* Soften borders and dividers */
+  .border-gray-50, .border-slate-50 {
+    border-color: #161923 !important;
+  }
+  .border-gray-100, .border-slate-100 {
+    border-color: #222635 !important;
+  }
+  .border-gray-200, .border-slate-200 {
+    border-color: #2E344A !important;
+  }
+
+  /* Background variations */
+  .bg-gray-50, .bg-slate-50 {
+    background-color: #0B0C10 !important;
+  }
+  .bg-gray-100, .bg-slate-100 {
+    background-color: #161923 !important;
+  }
+
+  /* Subdued text */
+  .text-gray-500, .text-slate-500 {
+    color: #7A82A5 !important;
+  }
+  .text-gray-400, .text-slate-400 {
+    color: #5D6688 !important;
+  }
+
+  /* Dark mode shadow overrides */
+  .shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
+  }
+  .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
+  }
+  .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4) !important;
+  }
+  .shadow-xl, .shadow-2xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Ensure SVGs like charts stay highly legible */
+  svg text {
+    fill: #7A82A5 !important;
+  }
+  svg line {
+    stroke: #1D2230 !important;
+  }
+}
+
+/* ========================================================
+   PRINT OVERRIDES FOR PERFECT A4 PDF GENERATION
+   ======================================================== */
+@media print {
+  /* Set bright background and hide default headers/footers */
+  html, body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Force display of the custom report during print */
+  #babycare-print-report {
+    display: block !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.5cm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Secure white background even in dark-mode environments */
+  .dark #babycare-print-report {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
+  }
+
+  /* Restore text colors in print view */
+  .dark #babycare-print-report * {
+    color: inherit;
+    text-shadow: none !important;
+  }
+
+  .dark #babycare-print-report .text-gray-900 {
+    color: #0f172a !important;
+  }
+
+  .dark #babycare-print-report .text-gray-800 {
+    color: #1e293b !important;
+  }
+
+  .dark #babycare-print-report .text-gray-700 {
+    color: #334155 !important;
+  }
+
+  .dark #babycare-print-report .text-gray-600 {
+    color: #475569 !important;
+  }
+
+  .dark #babycare-print-report .text-gray-500 {
+    color: #64748b !important;
+  }
+
+  .dark #babycare-print-report .text-gray-400 {
+    color: #94a3b8 !important;
+  }
+
+  .dark #babycare-print-report .bg-gray-50,
+  .dark #babycare-print-report .bg-gray-50\/60 {
+    background-color: #f8fafc !important;
+    background: #f8fafc !important;
+  }
+
+  .dark #babycare-print-report .bg-indigo-50 {
+    background-color: #e0e7ff !important;
+    background: #e0e7ff !important;
+  }
+
+  .dark #babycare-print-report .text-indigo-600 {
+    color: #4f46e5 !important;
+  }
+
+  .dark #babycare-print-report .text-purple-700 {
+    color: #6b21a8 !important;
+  }
+
+  .dark #babycare-print-report .bg-purple-50\/25 {
+    background-color: rgba(243, 232, 255, 0.25) !important;
+    background: rgba(243, 232, 255, 0.25) !important;
+  }
+
+  .dark #babycare-print-report .text-rose-700 {
+    color: #be123c !important;
+  }
+
+  .dark #babycare-print-report .bg-rose-50\/25 {
+    background-color: rgba(255, 241, 242, 0.25) !important;
+    background: rgba(255, 241, 242, 0.25) !important;
+  }
+
+  .dark #babycare-print-report .border-gray-100 {
+    border-color: #f1f5f9 !important;
+  }
+
+  /* Make sure background graphic colors and borders print perfectly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Page Break styling */
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Prevent elements from being awkwardly cut mid-paragraph */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

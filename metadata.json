@@ -1,0 +1,6 @@
+{
+  "name": "BabyCare+",
+  "description": "Die intuitive Premium-App zur Protokollierung von Mahlzeiten, Schlaf, Windeln, Wachstum und Gesundheit deines Babys.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
