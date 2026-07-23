@@ -114,3 +114,18 @@ export interface AppSettings {
   language: LanguageType;
   activeFamilyRole: FamilyRole;
 }
+
+export interface QuickAccessItem {
+  id: string;
+  type: 'meal' | 'sleep' | 'diaper' | 'medicine';
+  title: string;
+  emoji: string;
+  mealCategory?: 'milch' | 'brei' | 'getraenke';
+  mealSubType?: string;
+  amount?: number;
+  unit?: 'ml' | 'g';
+  durationMinutes?: number;
+  diaperType?: 'pipi' | 'gross' | 'beides';
+  medName?: string;
+  medDosage?: string;
+}
