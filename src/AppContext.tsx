@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   Child, MealLog, SleepLog, DiaperLog, GrowthLog, 
-  MedicineLog, AppointmentLog, Reminder, AppSettings, FamilyRole 
+  MedicineLog, AppointmentLog, Reminder, AppSettings, FamilyRole, QuickAccessItem
 } from './types';
 import { 
   initialChildren, initialMealLogs, initialSleepLogs, 
@@ -22,6 +22,9 @@ interface AppContextType {
   reminders: Reminder[];
   settings: AppSettings;
   currentUser: { email: string; role: FamilyRole } | null;
+  quickAccessItems: QuickAccessItem[];
+  addQuickAccessItem: (item: Omit<QuickAccessItem, 'id'>) => void;
+  deleteQuickAccessItem: (id: string) => void;
   
   // State Setters & Actions
   setCurrentUser: (user: { email: string; role: FamilyRole } | null) => void;
@@ -121,6 +124,43 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return stored ? JSON.parse(stored) : initialReminders;
   });
 
+  const [quickAccessItems, setQuickAccessItems] = useState<QuickAccessItem[]>(() => {
+    const stored = localStorage.getItem('babycare_quick_access');
+    if (stored) return JSON.parse(stored);
+    return [
+      {
+        id: 'quick-1',
+        type: 'meal',
+        title: '120 ml PRE',
+        emoji: '🍼',
+        mealCategory: 'milch',
+        mealSubType: 'PRE',
+        amount: 120,
+        unit: 'ml'
+      },
+      {
+        id: 'quick-2',
+        type: 'meal',
+        title: '150g Gemüse',
+        emoji: '🥣',
+        mealCategory: 'brei',
+        mealSubType: 'Gemüse',
+        amount: 150,
+        unit: 'g'
+      },
+      {
+        id: 'quick-3',
+        type: 'meal',
+        title: '80 ml Wasser',
+        emoji: '🥤',
+        mealCategory: 'getraenke',
+        mealSubType: 'Wasser',
+        amount: 80,
+        unit: 'ml'
+      }
+    ];
+  });
+
   const [settings, setSettings] = useState<AppSettings>(() => {
     const stored = localStorage.getItem('babycare_settings');
     return stored ? JSON.parse(stored) : {
@@ -177,6 +217,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     localStorage.setItem('babycare_settings', JSON.stringify(settings));
   }, [settings]);
+
+  useEffect(() => {
+    localStorage.setItem('babycare_quick_access', JSON.stringify(quickAccessItems));
+  }, [quickAccessItems]);
 
   useEffect(() => {
     if (settings.theme === 'dark') {
@@ -418,9 +462,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }));
   };
 
+  const addQuickAccessItem = (itemData: Omit<QuickAccessItem, 'id'>) => {
+    const newItem: QuickAccessItem = {
+      ...itemData,
+      id: `quick-${Date.now()}`
+    };
+    setQuickAccessItems(prev => [...prev, newItem]);
+  };
+
+  const deleteQuickAccessItem = (id: string) => {
+    setQuickAccessItems(prev => prev.filter(item => item.id !== id));
+  };
+
   return (
     <AppContext.Provider value={{
       children: childrenList,
+      quickAccessItems,
+      addQuickAccessItem,
+      deleteQuickAccessItem,
       activeChildId,
       activeChild,
       mealLogs,
